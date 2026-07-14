@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users") // Sets a base path for cleaner URLs
+@RequestMapping("/users") 
 public class controller {
 
     @Autowired
@@ -15,33 +15,41 @@ public class controller {
 
 
     @PostMapping
-    public String createUser(@RequestBody User user) {
-        s1.createuser(user);
-        return "User created successfully inside the ArrayList!";
+    public String createUser(@RequestBody User user)
+    {
+        if(s1.isallowed()==true){
+            s1.createuser(user);
+            return "User created successfully inside the ArrayList!";
+        }
+        return "error";
     }
 
 
     @PutMapping("/{id}")
     public String updateUser(@RequestBody User user, @PathVariable int id) {
-        boolean updated = s1.updateuser(user.getName(),user.getAge(),user.getId(), id);
-        if (updated) {
-            return "User with ID " + id + " successfully updated!";
+        if (s1.isallowed() == true) {
+            s1.updateuser(user.getName(), user.getAge(), user.getId(), id);
+            return "User updated successfully inside the ArrayList!";
         }
-        return "Update failed: User ID not found.";
+        return "error";
     }
 
     @GetMapping("/{id}")
     public User readUser(@PathVariable int id) {
-        return s1.readuser(id);
+        if(s1.isallowed()==true){
+            return s1.readuser(id);
+        }
+
+        return null;
     }
 
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable int id) {
-        boolean deleted = s1.deleteuser(id);
-        if (deleted) {
+        if(s1.isallowed()==true){
+            s1.deleteuser(id);
             return "User with ID " + id + " has been deleted.";
         }
-        return "Delete failed: User ID not found.";
+        return "User with ID " + id + " has been deleted.";
     }
 }
