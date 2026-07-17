@@ -1,37 +1,18 @@
 package org.example;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Service
 public class Model {
+    int limit=10;
 
-    private final int capacity = 5;
+    private final int capacity = limit;
     private int currentToken;
     private long lastRefillTimeStamp;
 
-
-    public Model() {
-        this.currentToken = 5;
-        this.lastRefillTimeStamp = 0;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public int getCurrentToken() {
-        return currentToken;
-    }
-
-    public void setCurrentToken(int currentToken) {
-        this.currentToken = currentToken;
-    }
-
-    public long getLastRefillTimeStamp() {
-        return lastRefillTimeStamp;
-    }
-
-    public void setLastRefillTimeStamp(long lastRefillTimeStamp) {
-        this.lastRefillTimeStamp = lastRefillTimeStamp;
-    }
 }
